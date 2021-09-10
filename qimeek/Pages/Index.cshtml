@@ -6,5 +6,14 @@
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    @foreach (Bookmark bookmark in @Model.Bookmarks)
+    {
+        <div class="row">
+            <a href="@bookmark.Url" target="_blank">
+                <img class="thumbnail" alt="chargement de l'image..." src="@Model.Config.ThumbnailProviderUrl@bookmark.Url" />
+            </a>
+            @bookmark.Title
+        </div>
+    }
+                }
 </div>

@@ -10,16 +10,24 @@ using Microsoft.Extensions.Hosting;
 using qimeek.Data;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace qimeek
 {
     public class Startup
     {
+        private QimeekConfig _qimeekConfig;
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+
+            // read external config
+            var mySerializer = new XmlSerializer(typeof(QimeekConfig));
+            using var myFileStream = new FileStream(@"..\..\qimeek_prod.xml", FileMode.Open);
+            _qimeekConfig = (QimeekConfig)mySerializer.Deserialize(myFileStream);
         }
 
         public IConfiguration Configuration { get; }
@@ -27,12 +35,13 @@ namespace qimeek
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("DefaultConnection")));
+            services.AddSingleton(_qimeekConfig);
+            services.AddDbContext<QimeekDbContext>(options =>
+                options.UseNpgsql(_qimeekConfig.DbConnectionString)
+            );
             services.AddDatabaseDeveloperPageExceptionFilter();
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<QimeekDbContext>();
             services.AddRazorPages();
         }
 
