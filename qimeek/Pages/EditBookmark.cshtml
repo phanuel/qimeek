@@ -1,0 +1,19 @@
+﻿@page
+@model qimeek.Pages.EditBookmarkModel
+@{
+    ViewData["Title"] = "Edit bookmark";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="bkmUrl" class="form-label">Url</label>
+                <input asp-for="Bookmark.Url" type="text" class="form-control" id="bkmUrl">
+                <label for="bkmTitle" class="form-label">Title</label>
+                <input asp-for="Bookmark.Title" type="text" class="form-control" id="bkmTitle">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

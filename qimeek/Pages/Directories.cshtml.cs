@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using qimeek.Data;
 
@@ -57,10 +58,28 @@ namespace qimeek.Pages
             // put parentDirs in the right order
             ParentDirectories.Reverse();
 
-            Bookmarks = _dbContext.Bookmarks.Where(b => b.DirectoryId == CurrentDirectory.Id && b.UserId == userId).Select(x => new Bookmark { Title = x.Title, Url = x.Url }).ToList();
+            Bookmarks = _dbContext.Bookmarks.Where(b => b.DirectoryId == CurrentDirectory.Id && b.UserId == userId).Select(x => new Bookmark { Id = x.Id, Title = x.Title, Url = x.Url }).ToList();
 
             Uri uri = new Uri(Config.ThumbnailProviderUrl);
             ThumbnailProviderLink = $"{uri.Scheme}://{uri.Host}";
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(int id)
+        {
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+
+            Directory directoryToDelete = _dbContext.Directories.Where(d => d.Id == id && d.UserId == userId).First();
+
+            if (directoryToDelete != null)
+            {
+                if (directoryToDelete.ParentId != null) // don't delete first level directory
+                {
+                    _dbContext.Directories.Remove(directoryToDelete);
+                    await _dbContext.SaveChangesAsync();
+                }
+            }
+
+            return Redirect("~/Directories?id=" + directoryToDelete.ParentId);
         }
     }
 }

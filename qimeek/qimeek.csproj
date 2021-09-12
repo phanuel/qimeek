@@ -11,8 +11,8 @@
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="5.0.9" />
     <PackageReference Include="Microsoft.CodeAnalysis.CSharp.Workspaces" Version="3.11.0" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.8" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.8">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.9" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.9">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
@@ -24,6 +24,18 @@
 
   <ItemGroup>
     <Folder Include="Areas\Identity\Data\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Pages\CreateDirectory - Copy %282%29.cshtml.cs">
+      <DependentUpon>CreateDirectory.cshtml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\CreateDirectory - Copy - Copy.cshtml.cs">
+      <DependentUpon>CreateDirectory - Copy.cshtml.cs</DependentUpon>
+    </Compile>
+    <Compile Update="Pages\CreateDirectory - Copy.cshtml.cs">
+      <DependentUpon>CreateDirectory.cshtml.cs</DependentUpon>
+    </Compile>
   </ItemGroup>
 
 </Project>

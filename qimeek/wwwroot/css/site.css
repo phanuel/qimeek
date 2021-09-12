@@ -79,3 +79,12 @@ body {
 .folder-icon {
     margin-right: 10px;
 }
+
+.edit-current-dir-container {
+    margin-right: 20px;
+}
+
+.edit-current-dir {
+    position: relative;
+    top: -53px;
+}
