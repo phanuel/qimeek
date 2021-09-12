@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - qimeek</title>
+    <title>@ViewData["Title"] - Qimeek</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
@@ -12,7 +12,7 @@
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-page="/Index">qimeek</a>
+                <a class="navbar-brand" asp-area="" asp-page="/Index">Qimeek</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -23,10 +23,7 @@
                             <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Directories">Bookmarks</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-page="/Directories"><i class="fas fa-bookmark"></i> Bookmarks</a>
                         </li>
                     </ul>
                     <partial name="_LoginPartial" />
@@ -42,7 +39,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            Qimeek v4.0.0 - &copy; 2021 - qimeek - <a asp-area="" asp-page="/Privacy">Privacy</a> @RenderSection("ThumbnailProviderLink", required: false)
+            Qimeek v4.0.0 - &copy; 2021 - Qimeek @RenderSection("ThumbnailProviderLink", required: false)
         </div>
     </footer>
 
