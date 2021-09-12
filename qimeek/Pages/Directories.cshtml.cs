@@ -30,6 +30,8 @@ namespace qimeek.Pages
             get { return _config; }
         }
 
+        public Directory CurrentDirectory { get; set; }
+        public List<Directory> ParentDirectories { get; set; }
         public List<Directory> SubDirectories { get; set; }
         public List<Bookmark> Bookmarks { get; set; }
         public string ThumbnailProviderLink { get; set; }
@@ -38,19 +40,24 @@ namespace qimeek.Pages
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
-            Directory currentDirectory;
-            if (id == 0)
-            {
-                currentDirectory = _dbContext.Directories.Where(d => d.ParentId == null && d.UserId == userId).Select(x => new Directory { Id = x.Id }).First();
-            }
-            else
-            {
-                currentDirectory = _dbContext.Directories.Where(d => d.Id == id && d.UserId == userId).Select(x => new Directory { Id = x.Id }).First();
-            }
+            // get all directories of the user, not only the subdirectories of the current directory because we need all dirs to build the breadcrumb (without making multiple db trips)
+            List<Directory> directories = _dbContext.Directories.Where(d => d.UserId == userId).Select(x => new Directory { Id = x.Id, Name = x.Name, ParentId = x.ParentId }).ToList();
 
-            SubDirectories = _dbContext.Directories.Where(d => d.ParentId == currentDirectory.Id && d.UserId == userId).Select(x => new Directory { Id = x.Id, Name = x.Name }).OrderBy(o => o.Name).ToList();
-            
-            Bookmarks = _dbContext.Bookmarks.Where(b => b.DirectoryId == currentDirectory.Id && b.UserId == userId).Select(x => new Bookmark { Title = x.Title, Url = x.Url }).ToList();
+            CurrentDirectory = directories.Where(d => d.Id == id).First();
+            SubDirectories = directories.Where(d => d.ParentId == CurrentDirectory.Id).ToList();
+
+            // find parent directories for the breadcrumb
+            Directory parentDir = CurrentDirectory;
+            ParentDirectories = new List<Directory>();
+            while(parentDir.ParentId != null)
+            {
+                parentDir = directories.Where(d => d.Id == parentDir.ParentId).First();
+                ParentDirectories.Add(parentDir);
+            }
+            // put parentDirs in the right order
+            ParentDirectories.Reverse();
+
+            Bookmarks = _dbContext.Bookmarks.Where(b => b.DirectoryId == CurrentDirectory.Id && b.UserId == userId).Select(x => new Bookmark { Title = x.Title, Url = x.Url }).ToList();
 
             Uri uri = new Uri(Config.ThumbnailProviderUrl);
             ThumbnailProviderLink = $"{uri.Scheme}://{uri.Host}";

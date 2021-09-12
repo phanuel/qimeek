@@ -69,3 +69,13 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+
+.breadcrumb-icon {
+    position: relative;
+    top: 5px;
+    margin-right: 10px;
+}
+
+.folder-icon {
+    margin-right: 10px;
+}

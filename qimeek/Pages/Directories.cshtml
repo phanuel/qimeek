@@ -1,15 +1,29 @@
 ﻿@page
 @model qimeek.Pages.DirectoriesModel
 
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <i class="fas fa-folder-open breadcrumb-icon"></i>
+        @if (Model.ParentDirectories.Count > 0)
+        {
+            @foreach (Directory parentDirectory in Model.ParentDirectories)
+            {
+                <li class="breadcrumb-item"><a href="Directories?id=@parentDirectory.Id">@parentDirectory.Name</a></li>
+            }
+        }
+        <li class="breadcrumb-item active" aria-current="page">@Model.CurrentDirectory.Name</li>
+    </ol>
+</nav>
+
 <ul class="list-group">
-    @foreach (Directory subDirectory in @Model.SubDirectories)
+    @foreach (Directory subDirectory in Model.SubDirectories)
     {
         <li class="list-group-item">
-            <a href="Directories?id=@subDirectory.Id"><i class="fas fa-folder"></i> @subDirectory.Name</a>
+            <a href="Directories?id=@subDirectory.Id"><i class="fas fa-folder folder-icon"></i>@subDirectory.Name</a>
         </li>
     }
 
-    @foreach (Bookmark bookmark in @Model.Bookmarks)
+    @foreach (Bookmark bookmark in Model.Bookmarks)
     {
         <li class="list-group-item">
             <a href="@bookmark.Url" target="_blank">
@@ -17,7 +31,7 @@
             </a>
             @bookmark.Title
         </li>
-        }
+    }
 </ul>
 
 @section ThumbnailProviderLink{ - Screenshots by <a href="@Model.ThumbnailProviderLink" onclick="this.target='_blank'">Robothumb</a> }
