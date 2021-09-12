@@ -1,23 +1,23 @@
 ﻿@page
 @model qimeek.Pages.DirectoriesModel
 
-<div class="text-center">
+<ul class="list-group">
     @foreach (Directory subDirectory in @Model.SubDirectories)
     {
-        <div class="row">
-            <a href="Directories?id=@subDirectory.Id">@subDirectory.Name</a>
-</div>
+        <li class="list-group-item">
+            <a href="Directories?id=@subDirectory.Id"><i class="fas fa-folder"></i> @subDirectory.Name</a>
+        </li>
     }
 
     @foreach (Bookmark bookmark in @Model.Bookmarks)
     {
-        <div class="row">
+        <li class="list-group-item">
             <a href="@bookmark.Url" target="_blank">
-                <img class="thumbnail" alt="chargement de l'image..." src="@Model.Config.ThumbnailProviderUrl@bookmark.Url" />
+                <img class="img-thumbnail" alt="chargement de l'image..." src="@Model.Config.ThumbnailProviderUrl@bookmark.Url" />
             </a>
             @bookmark.Title
-        </div>
-    }
-</div>
+        </li>
+        }
+</ul>
 
 @section ThumbnailProviderLink{ - Screenshots by <a href="@Model.ThumbnailProviderLink" onclick="this.target='_blank'">Robothumb</a> }
