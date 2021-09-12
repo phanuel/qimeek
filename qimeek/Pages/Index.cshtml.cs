@@ -1,14 +1,15 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using qimeek.Data;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using System.Security.Claims;
 
 namespace qimeek.Pages
 {
+    [Authorize]
     public class IndexModel : PageModel
     {
         private readonly ILogger<IndexModel> _logger;
@@ -23,6 +24,8 @@ namespace qimeek.Pages
         }
 
         public List<Bookmark> Bookmarks { get; set; }
+        public string ThumbnailProviderLink { get; set; }
+
         public QimeekConfig Config
         {
             get { return _config; }
@@ -30,7 +33,11 @@ namespace qimeek.Pages
 
         public void OnGet()
         {
-            Bookmarks = _dbContext.Bookmarks.ToList();
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            Bookmarks = _dbContext.Bookmarks.Where(b => b.UserId == userId).Take(5).ToList();
+
+            Uri uri = new Uri(Config.ThumbnailProviderUrl);
+            ThumbnailProviderLink = $"{uri.Scheme}://{uri.Host}";
         }
     }
 }

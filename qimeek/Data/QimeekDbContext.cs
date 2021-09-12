@@ -1,12 +1,12 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata;
 
 #nullable disable
 
 namespace qimeek.Data
 {
-    public partial class QimeekDbContext : DbContext
+    public partial class QimeekDbContext : IdentityDbContext<IdentityUser>
     {
         public QimeekDbContext()
         {
@@ -19,10 +19,12 @@ namespace qimeek.Data
 
         public virtual DbSet<Bookmark> Bookmarks { get; set; }
         public virtual DbSet<Directory> Directories { get; set; }
-        public virtual DbSet<User> Users { get; set; }
+        //public virtual DbSet<User> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            base.OnModelCreating(modelBuilder);
+
             modelBuilder.HasAnnotation("Relational:Collation", "fr_CH.utf8");
 
             modelBuilder.Entity<Bookmark>(entity =>
@@ -49,7 +51,9 @@ namespace qimeek.Data
                     .HasMaxLength(5000)
                     .HasColumnName("url");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasColumnType("text");
             });
 
             modelBuilder.Entity<Directory>(entity =>
@@ -71,7 +75,9 @@ namespace qimeek.Data
 
                 entity.Property(e => e.ParentId).HasColumnName("parent_id");
 
-                entity.Property(e => e.UserId).HasColumnName("user_id");
+                entity.Property(e => e.UserId)
+                    .HasColumnName("user_id")
+                    .HasColumnType("text");
             });
 
             modelBuilder.Entity<User>(entity =>

@@ -1,11 +1,13 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using qimeek.Data;
 using System;
@@ -26,7 +28,11 @@ namespace qimeek
 
             // read external config
             var mySerializer = new XmlSerializer(typeof(QimeekConfig));
+            #if DEBUG
             using var myFileStream = new FileStream(@"..\..\qimeek_prod.xml", FileMode.Open);
+            #elif RELEASE
+            using var myFileStream = new FileStream("qimeek_prod.xml", FileMode.Open);
+            #endif
             _qimeekConfig = (QimeekConfig)mySerializer.Deserialize(myFileStream);
         }
 
@@ -40,8 +46,13 @@ namespace qimeek
                 options.UseNpgsql(_qimeekConfig.DbConnectionString)
             );
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddEntityFrameworkStores<QimeekDbContext>();
+
+            services.Configure<IdentityOptions>(options =>
+            {
+                options.Password.RequireUppercase = false;
+                options.Password.RequireNonAlphanumeric = false;
+            });
+
             services.AddRazorPages();
         }
 
@@ -61,7 +72,12 @@ namespace qimeek
             }
 
             app.UseHttpsRedirection();
-            app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions
+            {
+#if RELEASE
+                FileProvider = new PhysicalFileProvider("/home/stillnorth/www/qimeek_net5")
+#endif
+            });
 
             app.UseRouting();
 
