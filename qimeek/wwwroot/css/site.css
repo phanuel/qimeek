@@ -70,6 +70,11 @@ body {
   line-height: 60px; /* Vertically center the text there */
 }
 
+#navbar-logo {
+    width: 30px;
+    margin-right: 5px;
+}
+
 .breadcrumb-icon {
     position: relative;
     top: 5px;
@@ -87,4 +92,12 @@ body {
 .edit-current-dir {
     position: relative;
     top: -53px;
+}
+
+.img-thumbnail {
+    margin-right: 10px;
+}
+
+.thumbnail-link:hover {
+    text-decoration: none;
 }

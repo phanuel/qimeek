@@ -51,16 +51,16 @@
 
     @foreach (Bookmark bookmark in Model.Bookmarks)
     {
-        <li class="list-group-item">
-            <a href="@bookmark.Url" target="_blank">
-                <img class="img-thumbnail" alt="chargement de l'image..." src="@Model.Config.ThumbnailProviderUrl@bookmark.Url" />
-            </a>
-            @bookmark.Title
-            <div class="float-right">
-                <a href="/EditBookmark?id=@bookmark.Id"><i class="fas fa-pencil-alt"></i></a>
-                <a href="#" onclick="deleteBookmark(@bookmark.Id)"><i class="fas fa-trash"></i></a>
-            </div>
-        </li>
+<li class="list-group-item">
+    <a href="@bookmark.Url" class="thumbnail-link" target="_blank">
+        <img class="img-thumbnail" alt="chargement de l'image..." src="@Model.Config.ThumbnailProviderUrl@bookmark.Url" />
+    </a>
+    <a href="@bookmark.Url" target="_blank">@bookmark.Title</a>
+    <div class="float-right">
+        <a href="/EditBookmark?id=@bookmark.Id"><i class="fas fa-pencil-alt"></i></a>
+        <a href="#" onclick="deleteBookmark(@bookmark.Id)"><i class="fas fa-trash"></i></a>
+    </div>
+</li>
     }
 </ul>
 
