@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using qimeek.Data;
+using qimeek.Models;
 
 namespace qimeek.Pages
 {
@@ -51,7 +52,7 @@ namespace qimeek.Pages
                 }
             }
             
-            return Redirect("~/Directories?id=" + Directory.ParentId);
+            return Redirect("~/Directories?id=" + directoryToUpdate.ParentId);
         }
     }
 }

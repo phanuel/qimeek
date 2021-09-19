@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
 using qimeek.Data;
+using qimeek.Models;
 
 namespace qimeek.Pages
 {
@@ -50,7 +51,7 @@ namespace qimeek.Pages
                 }
             }
 
-            return Redirect("~/Directories?id=" + Bookmark.DirectoryId);
+            return Redirect("~/Directories?id=" + bookmarkToUpdate.DirectoryId);
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(int id)

@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.FileProviders;
 using Microsoft.Extensions.Hosting;
 using qimeek.Data;
+using qimeek.Models;
 using System;
 using System.Collections.Generic;
 using System.IO;

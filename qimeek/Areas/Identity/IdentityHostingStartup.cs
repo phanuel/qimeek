@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using qimeek.Data;
+using qimeek.Models;
 
 [assembly: HostingStartup(typeof(qimeek.Areas.Identity.IdentityHostingStartup))]
 namespace qimeek.Areas.Identity

@@ -9,6 +9,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using qimeek.Data;
+using qimeek.Models;
 
 namespace qimeek.Pages
 {
@@ -34,7 +35,6 @@ namespace qimeek.Pages
         public Directory CurrentDirectory { get; set; }
         public List<Directory> ParentDirectories { get; set; }
         public List<Directory> SubDirectories { get; set; }
-        public List<Bookmark> Bookmarks { get; set; }
         public string ThumbnailProviderLink { get; set; }
 
         public void OnGet(int id)
@@ -42,7 +42,7 @@ namespace qimeek.Pages
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
 
             // get all directories of the user, not only the subdirectories of the current directory because we need all dirs to build the breadcrumb (without making multiple db trips)
-            List<Directory> directories = _dbContext.Directories.Where(d => d.UserId == userId).Select(x => new Directory { Id = x.Id, Name = x.Name, ParentId = x.ParentId }).ToList();
+            List<Directory> directories = _dbContext.Directories.Where(d => d.UserId == userId).Select(x => new Directory { Id = x.Id, Name = x.Name, ParentId = x.ParentId, Bookmarks = x.Bookmarks }).ToList();
 
             CurrentDirectory = directories.Where(d => d.Id == id).First();
             SubDirectories = directories.Where(d => d.ParentId == CurrentDirectory.Id).ToList();
@@ -57,8 +57,6 @@ namespace qimeek.Pages
             }
             // put parentDirs in the right order
             ParentDirectories.Reverse();
-
-            Bookmarks = _dbContext.Bookmarks.Where(b => b.DirectoryId == CurrentDirectory.Id && b.UserId == userId).Select(x => new Bookmark { Id = x.Id, Title = x.Title, Url = x.Url }).ToList();
 
             Uri uri = new Uri(Config.ThumbnailProviderUrl);
             ThumbnailProviderLink = $"{uri.Scheme}://{uri.Host}";

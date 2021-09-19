@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 #nullable disable
 
-namespace qimeek
+namespace qimeek.Models
 {
     public partial class Bookmark
     {
@@ -13,5 +13,8 @@ namespace qimeek
         public string Title { get; set; }
         public DateTime DateAdded { get; set; }
         public string UserId { get; set; }
+
+        public virtual Directory Directory { get; set; }
+        public virtual AspNetUser User { get; set; }
     }
 }

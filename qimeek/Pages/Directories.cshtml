@@ -9,7 +9,7 @@
         <i class="fas fa-folder-open breadcrumb-icon"></i>
         @if (Model.ParentDirectories.Count > 0)
         {
-            @foreach (Directory parentDirectory in Model.ParentDirectories)
+            @foreach (Models.Directory parentDirectory in Model.ParentDirectories)
             {
                 <li class="breadcrumb-item"><a href="Directories?id=@parentDirectory.Id">@parentDirectory.Name</a></li>
             }
@@ -38,7 +38,7 @@
 <br />
 
 <ul class="list-group">
-    @foreach (Directory subDirectory in Model.SubDirectories)
+    @foreach (Models.Directory subDirectory in Model.SubDirectories)
     {
         <li class="list-group-item">
             <a href="Directories?id=@subDirectory.Id"><i class="fas fa-folder folder-icon"></i>@subDirectory.Name</a>
@@ -49,7 +49,7 @@
         </li>
     }
 
-    @foreach (Bookmark bookmark in Model.Bookmarks)
+    @foreach (Models.Bookmark bookmark in Model.CurrentDirectory.Bookmarks)
     {
 <li class="list-group-item">
     <a href="@bookmark.Url" class="thumbnail-link" target="_blank">
