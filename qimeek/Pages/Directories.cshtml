@@ -1,0 +1,84 @@
+﻿@page
+@model qimeek.Pages.DirectoriesModel
+@{
+    ViewData["Title"] = "My Bookmarks";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <i class="fas fa-folder-open breadcrumb-icon"></i>
+        @if (Model.ParentDirectories != null && Model.ParentDirectories.Count > 0)
+        {
+            @foreach (Models.Directory parentDirectory in Model.ParentDirectories)
+            {
+                <li class="breadcrumb-item"><a href="Directories?id=@parentDirectory.Id">@parentDirectory.Name</a></li>
+            }
+        }
+        <li class="breadcrumb-item active" aria-current="page">@Model.CurrentDirectory.Name</li>
+    </ol>
+    <div class="float-right edit-current-dir-container">
+        <a href="/EditDirectory?id=@Model.CurrentDirectory.Id" class="edit-current-dir"><i class="fas fa-pencil-alt"></i></a>
+        @if (Model.CurrentDirectory.ParentId != null)
+        {
+            <a href="#" onclick="deleteDirectory(@Model.CurrentDirectory.Id)" class="edit-current-dir"><i class="fas fa-trash"></i></a>
+        }
+    </div>
+</nav>
+
+<div id="toolbar" class="row">
+    <div id="searchbox" class="col-sm-4">
+        <div class="justify-content-md-right">
+            <form method="get">
+                <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Search" asp-for="Query">
+                    <div class="input-group-append">
+                        <button class="btn btn-secondary" type="button">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+    <div class="col-sm-8">
+        <div id="buttons" class="row h-100 align-items-center text-center">
+            <div class="col">
+                <a href="/CreateDirectory?id=@Model.CurrentDirectory.Id"><i class="fas fa-folder-plus"></i> New directory</a>
+            </div>
+            <div class="col">
+                <a href="/CreateBookmark?id=@Model.CurrentDirectory.Id"><i class="fas fa-bookmark"></i> New bookmark</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul class="list-group">
+    @foreach (Models.Directory subDirectory in Model.SubDirectories)
+    {
+        <li class="list-group-item">
+            <a href="Directories?id=@subDirectory.Id"><i class="fas fa-folder folder-icon"></i>@subDirectory.Name</a>
+            <div class="float-right">
+                <a href="/EditDirectory?id=@subDirectory.Id"><i class="fas fa-pencil-alt"></i></a>
+                <a href="#" onclick="deleteDirectory(@subDirectory.Id)"><i class="fas fa-trash"></i></a>
+            </div>
+        </li>
+    }
+
+    @foreach (Models.Bookmark bookmark in Model.CurrentDirectory.Bookmarks)
+    {
+<li class="list-group-item">
+    <a href="@bookmark.Url" class="thumbnail-link" target="_blank">
+        <img class="img-thumbnail" alt="chargement de l'image..." src="@Model.Config.ThumbnailProviderUrl@bookmark.Url" />
+    </a>
+    <a href="@bookmark.Url" target="_blank">@bookmark.Title</a>
+    <div class="float-right">
+        <a href="/EditBookmark?id=@bookmark.Id"><i class="fas fa-pencil-alt"></i></a>
+        <a href="#" onclick="deleteBookmark(@bookmark.Id)"><i class="fas fa-trash"></i></a>
+    </div>
+</li>
+    }
+</ul>
+
+<partial name="_DeleteObjectPartial" />
+
+@section ThumbnailProviderLink{ - Screenshots by <a href="@Model.ThumbnailProviderLink" onclick="this.target='_blank'">Robothumb</a> }

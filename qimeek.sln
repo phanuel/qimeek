@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31624.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "qimeek", "qimeek\qimeek.csproj", "{B706BEF7-FECD-457B-B73B-AD86B2269D32}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B706BEF7-FECD-457B-B73B-AD86B2269D32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B706BEF7-FECD-457B-B73B-AD86B2269D32}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B706BEF7-FECD-457B-B73B-AD86B2269D32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B706BEF7-FECD-457B-B73B-AD86B2269D32}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C6582C53-ED1F-49DD-8DE9-14E9E1ADF7C6}
+	EndGlobalSection
+EndGlobal

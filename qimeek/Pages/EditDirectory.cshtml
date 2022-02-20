@@ -1,0 +1,17 @@
+﻿@page
+@model qimeek.Pages.EditDirectoryModel
+@{
+    ViewData["Title"] = "Edit directory";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="dirName" class="form-label">Name</label>
+                <input asp-for="Directory.Name" type="text" class="form-control" id="dirName">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>

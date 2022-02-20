@@ -1,0 +1,18 @@
+﻿@page
+@model qimeek.Pages.CreateDirectoryModel
+@{
+    ViewData["Title"] = "Create new directory";
+}
+
+<div class="row">
+    <div class="col-md-4">
+        <form method="POST">
+            <div class="mb-3">
+                <label for="dirName" class="form-label">Name</label>
+                <input asp-for="NewDirectory.Name" type="text" class="form-control" id="dirName">
+                <input asp-for="NewDirectory.ParentId" type="hidden" class="form-control" value="@Model.CurrentDirectory?.Id">
+            </div>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+    </div>
+</div>
