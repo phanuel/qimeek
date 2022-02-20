@@ -94,6 +94,18 @@ body {
     top: -53px;
 }
 
+#toolbar {
+    margin-bottom: 15px;
+}
+
+#searchbox {
+    padding: 0px;
+}
+
+#buttons {
+    min-height: 38px;
+}
+
 .img-thumbnail {
     margin-right: 10px;
 }
