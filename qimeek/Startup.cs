@@ -76,7 +76,7 @@ namespace qimeek
             app.UseStaticFiles(new StaticFileOptions
             {
 #if RELEASE
-                FileProvider = new PhysicalFileProvider("/home/stillnorth/www/qimeek_net5")
+                FileProvider = new PhysicalFileProvider("/home/stillnorth/www/qimeek")
 #endif
             });
 
